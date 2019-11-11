@@ -1,2 +1,7 @@
-*
+downloads
+src
+aws*
+crash*
+*.log
 !requirements*
+!faces

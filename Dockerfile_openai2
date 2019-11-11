@@ -1,0 +1,45 @@
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+ARG BASE_CONTAINER=jupyter/scipy-notebook
+FROM $BASE_CONTAINER
+
+LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
+
+RUN add-apt-repository -y ppa:jonathonf/ffmpeg-4 \
+ && apt-get update -qq -y \
+ && apt-get install -y libsm6 libxrender1 libxext-dev python3-tk ffmpeg git \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN conda install -y tensorflow=1.14
+
+RUN pip install xgboost==0.82
+RUN pip install python-Levenshtein==0.12.0
+RUN pip install flatten_json==0.1.6
+RUN pip install shap==0.28.5
+RUN pip install logmatic-python==0.1.7
+
+#RUN pip install progressbar2==3.39.2
+RUN pip install asyncio==3.4.3
+
+COPY requirements.txt /opt/
+RUN pip3 install --upgrade pip
+RUN pip3 --no-cache-dir install -r /opt/requirements.txt && rm /opt/requirements.txt
+
+ADD https://github.com/krallin/tini/releases/download/v0.18.0/tini /tini
+USER root
+RUN chmod +x /tini
+
+
+# RUN pip install jupyter
+
+ENV JUPYTER_TOKEN=123
+
+WORKDIR /faceswap
+
+ENV PYTHONPATH /faceswap
+
+EXPOSE 19999
+
+ENTRYPOINT ["/tini", "--"]
+CMD ["jupyter-notebook", "--allow-root", "--no-browser", "--port=19999"]

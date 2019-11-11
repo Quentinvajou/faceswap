@@ -10,5 +10,9 @@ COPY requirements.txt /opt/
 RUN pip3 install --upgrade pip
 RUN pip3 --no-cache-dir install -r /opt/requirements.txt && rm /opt/requirements.txt
 
-WORKDIR "/srv"
+RUN mkdir -p /faceswap/faces/
+COPY faces/ /faceswap/faces/
+COPY . /faceswap/
+
+WORKDIR "/faceswap"
 CMD ["/bin/bash"]

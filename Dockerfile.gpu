@@ -18,5 +18,9 @@ RUN cd /usr/local/cuda/lib64 \
  && ln -s libcuda.so libcuda.so.1 \
  && ldconfig
 
-WORKDIR "/notebooks"
+ RUN mkdir -p /faceswap/faces/
+ COPY faces/ /faceswap/faces/
+ COPY . /faceswap/
+
+WORKDIR "/faceswap"
 CMD ["jupyter-notebook", "--allow-root" ,"--port=8888" ,"--no-browser" ,"--ip=0.0.0.0"]

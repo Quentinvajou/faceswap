@@ -6,9 +6,9 @@
 !*.md
 !*.nsi
 !*.png
-!*.py
 !*.rst
 !*.sh
+!*.py
 !*.txt
 !.cache
 !Dockerfile*
@@ -36,6 +36,8 @@
 !_travis
 !_travis/*
 !.travis.yml
+!notebooks/
+!notebooks/*
 *.ini
 *.pyc
 __pycache__/

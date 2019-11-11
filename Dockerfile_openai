@@ -1,0 +1,59 @@
+# Copyright (c) Jupyter Development Team.
+# Distributed under the terms of the Modified BSD License.
+ARG BASE_CONTAINER=jupyter/scipy-notebook
+FROM $BASE_CONTAINER
+
+LABEL maintainer="Jupyter Project <jupyter@googlegroups.com>"
+
+# Install Tensorflow
+#RUN conda install --quiet --yes \
+#    'tensorflow=1.12*' \
+#    'keras=2.2*' && \
+#    conda clean -tipsy && \
+#    fix-permissions $CONDA_DIR && \
+#    fix-permissions /home/$NB_USER
+
+RUN pip install numpy==1.14.5
+RUN conda install -y tensorflow=1.14 keras
+
+RUN pip install tqdm==4.31.1
+RUN pip install xgboost==0.82
+RUN pip install python-Levenshtein==0.12.0
+RUN pip install flatten_json==0.1.6
+RUN pip install tqdm==4.31.1
+RUN pip install pymongo==3.7.2
+RUN pip install shap==0.28.5
+RUN pip install logmatic-python==0.1.7
+RUN pip install mysql-connector==2.1.7
+RUN pip install azure==2.0.0
+
+RUN pip install graphene==2.0.1
+RUN pip install Flask==0.12.2
+RUN pip install Flask-GraphQL==1.4.1
+RUN pip install gunicorn==19.7.1
+#RUN pip install progressbar2==3.39.2
+RUN pip install asyncio==3.4.3
+RUN pip install algoliasearch==2.0.4
+
+RUN pip install opencv-python
+RUN pip install google_images_download
+
+ADD https://github.com/krallin/tini/releases/download/v0.18.0/tini /tini
+USER root
+RUN chmod +x /tini
+
+
+# RUN pip install jupyter
+
+ENV JUPYTER_TOKEN=123
+
+COPY faces/ /faceswap/faces/
+
+WORKDIR /faceswap
+
+ENV PYTHONPATH /faceswap
+
+EXPOSE 19999
+
+ENTRYPOINT ["/tini", "--"]
+CMD ["jupyter-notebook", "--allow-root", "--no-browser", "--port=19999"]

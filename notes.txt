@@ -1,0 +1,17 @@
+install docker on instance
+https://serverfault.com/questions/836198/how-to-install-docker-on-aws-ec2-instance-with-ami-ce-ee-update
+
+install htop
+```
+$ yum install htop
+```
+
+transform docker image into tar
+https://stackoverflow.com/questions/23935141/how-to-copy-docker-images-from-one-host-to-another-without-using-a-repository
+
+use scp local to remote server
+https://github.com/juanfrans/notes/wiki/Copying-Files-Between-Local-Computer-and-Instance-(AWS)
+
+
+tuto to use remote GPU for jupyter training of models
+https://towardsdatascience.com/how-to-train-custom-word-embeddings-using-gpu-on-aws-f62727a1e3f6
